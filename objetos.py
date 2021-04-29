@@ -8,8 +8,10 @@ import ctypes
 
 # Variáveis globais
 shaderProgram = None
-VBO = [None, None, None, None, None, None, None] # Vertex Buffer Object
-VAO = [None, None, None, None, None, None, None] # Vertex Array Object
+# VBO = [None, None, None, None, None, None, None] # Vertex Buffer Object
+VBO = [None] * 100
+# VAO = [None, None, None, None, None, None, None] # Vertex Array Object
+VAO = [None] * 100
 
 vertex_shader_codigo= """
 #version 330 core
@@ -258,11 +260,11 @@ def display_quadrado(indiceVAO, translatarX, translatarY, translatarZ, escalarX,
     gl.glDrawArrays(gl.GL_TRIANGLES, 0, quant_vertices)
     gl.glBindVertexArray(0) # Desvincula o VAO
 
-def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5):
+def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5, data_q6):
     global VAO
     global VBO 
     # color_VBO = [None, None, None, None, None, None, None] 
-    color_VBO = [None] * 10
+    color_VBO = [None] * 100
     
     # color_VBO = [] 
 
@@ -274,7 +276,7 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
     # VAO[5] = gl.glGenVertexArrays(1)
     # VAO[6] = gl.glGenVertexArrays(1)
     count = 0
-    while(count <= 6):
+    while(count <= 20):
         VAO[count] = gl.glGenVertexArrays(1)
         count += 1
     
@@ -287,7 +289,7 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
     # VBO[5] = gl.glGenBuffers(1)
     # VBO[6] = gl.glGenBuffers(1)
     count = 0
-    while(count <= 6):
+    while(count <= 20):
         VBO[count] = gl.glGenBuffers(1)
         count += 1
     
@@ -300,7 +302,7 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
     # color_VBO[5] = gl.glGenBuffers(1)
     # color_VBO[6] = gl.glGenBuffers(1)
     count = 0
-    while(count <= 6):
+    while(count <= 20):
         color_VBO[count] = gl.glGenBuffers(1)
         count += 1
     
@@ -349,31 +351,41 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
 
     # Janela 1
     lista_cores = [
-    1.0, 0.0, 1.0, # Vertice 1
-    1.0, 0.0, 1.0, # Vertice 2
-    1.0, 0.0, 1.0,# Vertice 3
-    1.0, 0.0, 1.0, # Vertice 1
-    1.0, 0.0, 1.0, # Vertice 2
-    1.0, 0.0, 1.0 # Vertice 3
-    ] 
+    0.0, 1.0, 1.0, # Vertice 1
+    0.0, 1.0, 1.0, # Vertice 2
+    0.0, 1.0, 1.0,# Vertice 3
+    0.0, 1.0, 1.0, # Vertice 1
+    0.0, 1.0, 1.0, # Vertice 2
+    0.0, 1.0, 1.0 # Vertice 3
+    ]
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 5, data_q4)
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 5, data_q4) # Janela 2
 
     
 
+    # cor do sol
+    lista_cores = [
+    1.0, 1.0, 0.0, # Vertice 1
+    1.0, 1.0, 0.0, # Vertice 2
+    1.0, 1.0, 0.0,# Vertice 3
+    1.0, 1.0, 0.0, # Vertice 1
+    1.0, 1.0, 1.0, # Vertice 2
+    1.0, 1.0, 1.0 # Vertice 3
+    ] 
 
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 7, data_q6)
 
 
 
     # porta 1
     lista_cores = [
-    128.0, 30.0, 0.0, # Vertice 1
-    128.0, 30.0, 0.0, # Vertice 2
-    128.0, 30.0, 0.0,# Vertice 3
-    128.0, 30.0, 0.0, # Vertice 1
-    128.0, 30.0, 0.0, # Vertice 2
-    128.0, 30.0, 0.0 # Vertice 3
+    0.5, 1.0, 0.5, # Vertice 1
+    0.5, 1.0, 0.5, # Vertice 2
+    0.5, 1.0, 0.5,# Vertice 3
+    0.5, 1.0, 0.5, # Vertice 1
+    0.5, 1.0, 0.5, # Vertice 2
+    0.5, 1.0, 0.5 # Vertice 3
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 6, data_q5)
@@ -498,6 +510,12 @@ def display():
     # Quadrado 1
     display_quadrado(2, -2.0, -1.5, -0.1, 3, 3, 3)
  
+    # Quadrado 2
+    display_quadrado(3, 1.3, -1.5, -0.1, 4.5, 3, 3)
+    
+    # parte retangular do telhado
+    display_quadrado(4, 0.2, 0.28, -0.1, 4, 3, 3)
+
     # janela 1
     display_quadrado(5, 0.5, -0.8, -0.1, 1, 1, 1)
 
@@ -507,11 +525,11 @@ def display():
     # porta 1
     display_quadrado(6, -1.8, -1.69, -0.1, 1, 2, 1)
 
-    # Quadrado 2
-    display_quadrado(3, 1.3, -1.5, -0.1, 4.5, 3, 3)
+    # sol
+    display_quadrado(7, 3, 3, 0, -0.5, .5, 0)
+    # configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 7, data_q6)
+
     
-    # parte retangular do telhado
-    display_quadrado(4, 0.2, 0.28, -0.1, 4, 3, 3)
     
 
 
@@ -552,9 +570,10 @@ def main_opengl():
     q3 = create_telhado()
     q4 = create_janela()
     q5 = create_porta()
+    q6 = create_janela()
     
     create_buffers(data_t1=t1, data_t2=t2, data_q1=q1, data_q2=q2, data_q3=q3, data_q4 =q4,
-        data_q5=q5)
+        data_q5=q5, data_q6=q6)
     
     # Precisa chamar glUseProgram toda vez antes de acessar variável uniform no shader
     gl.glUseProgram(shaderProgram)
