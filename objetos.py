@@ -8,8 +8,8 @@ import ctypes
 
 # Variáveis globais
 shaderProgram = None
-VBO = [None, None, None] # Vertex Buffer Object
-VAO = [None, None, None] # Vertex Array Object
+VBO = [None, None, None, None, None] # Vertex Buffer Object
+VAO = [None, None, None, None, None] # Vertex Array Object
 
 vertex_shader_codigo= """
 #version 330 core
@@ -55,9 +55,9 @@ def create_data_triangulo_1():
 def create_data_triangulo_2():
     
     # Vertices do triangulo
-    v1 = glm.vec3(0.0, -0.5, 0.0) # 
-    v2 = glm.vec3(0.9, -0.5, 0.0) # 
-    v3 = glm.vec3(0.45, 0.5, 0.0) # 
+    v1 = glm.vec3(-0.9, -0.3, 0.0) # esquerda abaixo
+    v2 = glm.vec3(0.1, -0.3, 0.0) # meio abaixo
+    v3 = glm.vec3(-0.35, 0.3, 0.0) # esquerda acima 
     tri = glm.mat3(v1, v2, v3) 
     return tri
 
@@ -76,23 +76,65 @@ def create_quad():
     
     return vertices
 
-def create_buffers(data_t1, data_t2, data_q1):
+
+def create_quad2():
+
+    lista_vertices = [
+        -0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 1
+        0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 2
+        0.5,  0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 3
+        0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 1
+        -0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 2
+        -0.5, -0.5, -0.5 # Face 1 | Triangulo 2 | Vertice 3
+        ]
+
+    vertices = np.array(lista_vertices, dtype=np.float32)
+    
+    return vertices
+
+
+def create_telhado():
+
+    lista_vertices = [
+        -0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 1
+        0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 2
+        0.5,  0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 3
+        0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 1
+        -0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 2
+        -0.5, -0.5, -0.5 # Face 1 | Triangulo 2 | Vertice 3
+        ]
+
+    vertices = np.array(lista_vertices, dtype=np.float32)
+    
+    return vertices
+
+
+
+def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3):
 
     global VAO
     global VBO 
-    color_VBO = [None, None, None] 
+    color_VBO = [None, None, None, None, None] 
 
     VAO[0] = gl.glGenVertexArrays(1) 
     VAO[1] = gl.glGenVertexArrays(1) 
     VAO[2] = gl.glGenVertexArrays(1) 
+    VAO[3] = gl.glGenVertexArrays(1) 
+    VAO[4] = gl.glGenVertexArrays(1)
 
     VBO[0] = gl.glGenBuffers(1) 
     VBO[1] = gl.glGenBuffers(1)
     VBO[2] = gl.glGenBuffers(1)
+    VBO[3] = gl.glGenBuffers(1)
+    VBO[4] = gl.glGenBuffers(1)
+    
 
     color_VBO[0] = gl.glGenBuffers(1)
     color_VBO[1] = gl.glGenBuffers(1)
     color_VBO[2] = gl.glGenBuffers(1)
+    color_VBO[3] = gl.glGenBuffers(1)
+    color_VBO[4] = gl.glGenBuffers(1)
+    
 
     # Triangulo 1
     gl.glBindVertexArray(VAO[0])
@@ -130,7 +172,14 @@ def create_buffers(data_t1, data_t2, data_q1):
     gl.glDisableVertexAttribArray(local_vCor)
     gl.glBindBuffer(gl.GL_ARRAY_BUFFER, 0) 
 
-    # Triangulo 2
+
+
+
+
+
+
+
+    # parte triangular do telhado
     gl.glBindVertexArray(VAO[1])
     gl.glBindBuffer(gl.GL_ARRAY_BUFFER, VBO[1]) # Efetua o bind do VBO
     gl.glBufferData(target=gl.GL_ARRAY_BUFFER, size= glm.sizeof(data_t2), data=glm.value_ptr(data_t2), usage=gl.GL_STATIC_DRAW)
@@ -143,11 +192,19 @@ def create_buffers(data_t1, data_t2, data_q1):
     gl.glEnableVertexAttribArray(local) # Associa e habilita os dados do Vertex Buffer (VBO) no Array
 
     # Copia os dados para o color_VBO
+    # lista_cores = [
+    # 1.0, 0.0, 0.0, # Vertice 1
+    # 1.0, 0.0, 0.0, # Vertice 2
+    # 1.0, 0.0, 0.0 # Vertice 3
+    # ] 
+
+
     lista_cores = [
-    0.0, 3.0, 2.0, # Vertice 1
-    0.0, 3.0, 2.0, # Vertice 2
-    0.0, 3.0, 2.0 # Vertice 3
+    0.0, 1.0, 1.0, # Vertice 1
+    0.0, 1.0, 1.0, # Vertice 2
+    0.0, 1.0, 1.0 # Vertice 3
     ] 
+
     colors_to_buffer = np.array(lista_cores, dtype=np.float32)
     gl.glBindBuffer(gl.GL_ARRAY_BUFFER, color_VBO[1]) # Efetua o bind do VBO
     gl.glBufferData(gl.GL_ARRAY_BUFFER,(ctypes.c_float*len(colors_to_buffer))(*colors_to_buffer),gl.GL_DYNAMIC_DRAW) # usando ctypes
@@ -165,6 +222,11 @@ def create_buffers(data_t1, data_t2, data_q1):
     gl.glDisableVertexAttribArray(local)
     gl.glDisableVertexAttribArray(local_vCor)
     gl.glBindBuffer(gl.GL_ARRAY_BUFFER, 0) 
+ 
+
+
+
+
 
     # Quadrado 1
     gl.glBindVertexArray(VAO[2])
@@ -189,6 +251,93 @@ def create_buffers(data_t1, data_t2, data_q1):
     ] 
     colors_to_buffer = np.array(lista_cores, dtype=np.float32)
     gl.glBindBuffer(gl.GL_ARRAY_BUFFER, color_VBO[2]) # Efetua o bind do VBO
+    gl.glBufferData(gl.GL_ARRAY_BUFFER,(ctypes.c_float*len(colors_to_buffer))(*colors_to_buffer),gl.GL_DYNAMIC_DRAW) # usando ctypes
+
+    local_vCor = gl.glGetAttribLocation(shaderProgram, 'vCor')
+    tam_cores = 3 # Quantidade valores que definem a cor (tipo vec3)
+    stride = 0 # Espaço entre os dados de cor
+    offset = None # Onde os dados iniciam no Vertex Buffer
+    # Descreve a forma de organização dos dados dentro do último buffer (VBO) vinculado (glBindBuffer)
+    gl.glVertexAttribPointer(local_vCor, tam_cores, gl.GL_FLOAT, gl.GL_FALSE, stride, offset) 
+    gl.glEnableVertexAttribArray(local_vCor) # Associa e habilita os dados do Vertex Buffer (VBO) no Array
+
+    # Desvincula o VAO, VBO
+    gl.glBindVertexArray(0) # Importante: Unbind do VAO primeiro
+    gl.glDisableVertexAttribArray(local)
+    gl.glDisableVertexAttribArray(local_vCor)
+    gl.glBindBuffer(gl.GL_ARRAY_BUFFER, 0)
+
+
+
+
+
+    # Quadrado 2
+    gl.glBindVertexArray(VAO[3])
+    gl.glBindBuffer(gl.GL_ARRAY_BUFFER, VBO[3]) # Efetua o bind do VBO
+    gl.glBufferData(gl.GL_ARRAY_BUFFER, (ctypes.c_float*len(data_q2))(*data_q2), gl.GL_STATIC_DRAW)
+    local = gl.glGetAttribLocation(shaderProgram, 'vPos')
+    vertexDim = 3 # quantidade de elementos do vetor declarado no shader
+    stride = 0 # Espaço em bytes até o próximo valor. E.g. próximo x, quando for posição (X | Y | Z | X | Y | ...)
+    offset = None # Onde os dados iniciam no Vertex Buffer
+    # Descreve a forma de organização dos dados dentro do último buffer (VBO) vinculado (glBindBuffer)
+    gl.glVertexAttribPointer(local, vertexDim, gl.GL_FLOAT, gl.GL_FALSE, stride, offset) 
+    gl.glEnableVertexAttribArray(local) # Associa e habilita os dados do Vertex Buffer (VBO) no Array
+
+    # Copia os dados para o color_VBO
+    lista_cores = [
+    0.0, 0.0, 1.0, # Vertice 1
+    0.0, 0.0, 1.0, # Vertice 2
+    0.0, 0.0, 1.0,# Vertice 3
+    0.0, 0.0, 1.0, # Vertice 1
+    0.0, 0.0, 1.0, # Vertice 2
+    0.0, 0.0, 1.0 # Vertice 3
+    ] 
+    colors_to_buffer = np.array(lista_cores, dtype=np.float32)
+    gl.glBindBuffer(gl.GL_ARRAY_BUFFER, color_VBO[3]) # Efetua o bind do VBO
+    gl.glBufferData(gl.GL_ARRAY_BUFFER,(ctypes.c_float*len(colors_to_buffer))(*colors_to_buffer),gl.GL_DYNAMIC_DRAW) # usando ctypes
+
+    local_vCor = gl.glGetAttribLocation(shaderProgram, 'vCor')
+    tam_cores = 3 # Quantidade valores que definem a cor (tipo vec3)
+    stride = 0 # Espaço entre os dados de cor
+    offset = None # Onde os dados iniciam no Vertex Buffer
+    # Descreve a forma de organização dos dados dentro do último buffer (VBO) vinculado (glBindBuffer)
+    gl.glVertexAttribPointer(local_vCor, tam_cores, gl.GL_FLOAT, gl.GL_FALSE, stride, offset) 
+    gl.glEnableVertexAttribArray(local_vCor) # Associa e habilita os dados do Vertex Buffer (VBO) no Array
+
+    # Desvincula o VAO, VBO
+    gl.glBindVertexArray(0) # Importante: Unbind do VAO primeiro
+    gl.glDisableVertexAttribArray(local)
+    gl.glDisableVertexAttribArray(local_vCor)
+    gl.glBindBuffer(gl.GL_ARRAY_BUFFER, 0)
+
+
+
+
+
+
+     # parte retangular do telhado
+    gl.glBindVertexArray(VAO[4])
+    gl.glBindBuffer(gl.GL_ARRAY_BUFFER, VBO[4]) # Efetua o bind do VBO
+    gl.glBufferData(gl.GL_ARRAY_BUFFER, (ctypes.c_float*len(data_q3))(*data_q3), gl.GL_STATIC_DRAW)
+    local = gl.glGetAttribLocation(shaderProgram, 'vPos')
+    vertexDim = 3 # quantidade de elementos do vetor declarado no shader
+    stride = 0 # Espaço em bytes até o próximo valor. E.g. próximo x, quando for posição (X | Y | Z | X | Y | ...)
+    offset = None # Onde os dados iniciam no Vertex Buffer
+    # Descreve a forma de organização dos dados dentro do último buffer (VBO) vinculado (glBindBuffer)
+    gl.glVertexAttribPointer(local, vertexDim, gl.GL_FLOAT, gl.GL_FALSE, stride, offset) 
+    gl.glEnableVertexAttribArray(local) # Associa e habilita os dados do Vertex Buffer (VBO) no Array
+
+    # Copia os dados para o color_VBO
+    lista_cores = [
+    0.0, 1.0, 1.0, # Vertice 1
+    0.0, 1.0, 1.0, # Vertice 2
+    0.0, 1.0, 1.0,# Vertice 3
+    0.0, 1.0, 1.0, # Vertice 1
+    0.0, 1.0, 1.0, # Vertice 2
+    0.0, 1.0, 1.0 # Vertice 3
+    ] 
+    colors_to_buffer = np.array(lista_cores, dtype=np.float32)
+    gl.glBindBuffer(gl.GL_ARRAY_BUFFER, color_VBO[4]) # Efetua o bind do VBO
     gl.glBufferData(gl.GL_ARRAY_BUFFER,(ctypes.c_float*len(colors_to_buffer))(*colors_to_buffer),gl.GL_DYNAMIC_DRAW) # usando ctypes
 
     local_vCor = gl.glGetAttribLocation(shaderProgram, 'vCor')
@@ -314,14 +463,24 @@ def display():
     gl.glBindVertexArray(0) # Desvincula o VAO
 
     
-    # Triangulo 2
+
+    # parte triangular do telhado
     gl.glBindVertexArray(VAO[1])
 
     # Cria matrizes de transformação
     matriz_transformacao = glm.identity(glm.mat4) # Cria matriz identidade
     # Quanto eu quero transladar em cada eixo
-    vetor_translacao = glm.vec3(1.5, 1.0, 0.0)
+    vetor_translacao = glm.vec3(2.7, 0.75, 0.0)
     matriz_transformacao = glm.translate(matriz_transformacao, vetor_translacao)
+
+    # Aumentar o tamanho do quadrado (escala)
+    escalar = 2.5
+    # Aplica um mesmo valor de escala em todos os eixos
+    vetor_escala = glm.vec3(escalar, escalar, escalar)
+    identidade = glm.mat4(1.0)
+    matriz_escala = glm.scale(identidade, vetor_escala)
+
+    matriz_transformacao = matriz_transformacao * matriz_escala
 
     # Localizacao da variavel Uniform matriz transformacao no vertex shader
     transformacao_loc = gl.glGetUniformLocation(shaderProgram, "transformacao")
@@ -331,6 +490,9 @@ def display():
     quant_vertices = 3 
     gl.glDrawArrays(gl.GL_TRIANGLES, 0, quant_vertices)
     gl.glBindVertexArray(0) # Desvincula o VAO
+
+
+
 
     # Quadrado 1
     gl.glBindVertexArray(VAO[2])
@@ -358,6 +520,79 @@ def display():
     quant_vertices = 6
     gl.glDrawArrays(gl.GL_TRIANGLES, 0, quant_vertices)
     gl.glBindVertexArray(0) # Desvincula o VAO
+
+
+
+
+
+    # Quadrado 2
+    gl.glBindVertexArray(VAO[3])
+
+    # Cria matrizes de transformação
+    matriz_transformacao = glm.identity(glm.mat4) # Cria matriz identidade
+    # Quanto eu quero transladar em cada eixo
+    vetor_translacao = glm.vec3(1.3, -1.5, -0.1)
+    matriz_transformacao = glm.translate(matriz_transformacao, vetor_translacao)
+
+    # Aumentar o tamanho do quadrado (escala)
+    escalar = 3.0
+    # Aplica um mesmo valor de escala em todos os eixos
+    vetor_escala = glm.vec3(4.5, escalar, escalar)
+    identidade = glm.mat4(1.0)
+    matriz_escala = glm.scale(identidade, vetor_escala)
+
+    matriz_transformacao = matriz_transformacao * matriz_escala
+
+    # Localizacao da variavel Uniform matriz transformacao no vertex shader
+    transformacao_loc = gl.glGetUniformLocation(shaderProgram, "transformacao")
+    # Copia os dados da matriz de transformacao para matriz Uniform dentro do vertex shader
+    gl.glUniformMatrix4fv(transformacao_loc, 1, gl.GL_FALSE, glm.value_ptr(matriz_transformacao))
+
+    quant_vertices = 6
+    gl.glDrawArrays(gl.GL_TRIANGLES, 0, quant_vertices)
+    gl.glBindVertexArray(0) # Desvincula o VAO
+
+
+
+
+
+
+
+
+
+    
+
+    # parte retangular do telhado
+    gl.glBindVertexArray(VAO[4])
+
+    # Cria matrizes de transformação
+    matriz_transformacao = glm.identity(glm.mat4) # Cria matriz identidade
+    # Quanto eu quero transladar em cada eixo
+    vetor_translacao = glm.vec3(0.2, 0.28, -0.1)
+    matriz_transformacao = glm.translate(matriz_transformacao, vetor_translacao)
+
+    # Aumentar o tamanho do quadrado (escala)
+    escalar = 3.0
+    # Aplica um mesmo valor de escala em todos os eixos
+    vetor_escala = glm.vec3(4, escalar, escalar)
+    identidade = glm.mat4(1.0)
+    matriz_escala = glm.scale(identidade, vetor_escala)
+
+    matriz_transformacao = matriz_transformacao * matriz_escala
+
+    # Localizacao da variavel Uniform matriz transformacao no vertex shader
+    transformacao_loc = gl.glGetUniformLocation(shaderProgram, "transformacao")
+    # Copia os dados da matriz de transformacao para matriz Uniform dentro do vertex shader
+    gl.glUniformMatrix4fv(transformacao_loc, 1, gl.GL_FALSE, glm.value_ptr(matriz_transformacao))
+
+    quant_vertices = 6
+    gl.glDrawArrays(gl.GL_TRIANGLES, 0, quant_vertices)
+    gl.glBindVertexArray(0) # Desvincula o VAO
+
+
+
+
+
 
     gl.glUseProgram(0) # Desvincula o Shader Program
 
@@ -392,7 +627,10 @@ def main_opengl():
     t1 = create_data_triangulo_1()
     t2 = create_data_triangulo_2()
     q1 = create_quad()
-    create_buffers(data_t1=t1, data_t2=t2, data_q1=q1)
+    q2 = create_quad2()
+    q3 = create_telhado()
+    
+    create_buffers(data_t1=t1, data_t2=t2, data_q1=q1, data_q2=q2, data_q3=q3)
     
     # Precisa chamar glUseProgram toda vez antes de acessar variável uniform no shader
     gl.glUseProgram(shaderProgram)
