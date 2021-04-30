@@ -260,47 +260,25 @@ def display_quadrado(indiceVAO, translatarX, translatarY, translatarZ, escalarX,
     gl.glDrawArrays(gl.GL_TRIANGLES, 0, quant_vertices)
     gl.glBindVertexArray(0) # Desvincula o VAO
 
-def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5, data_q6):
-    global VAO
-    global VBO 
-    # color_VBO = [None, None, None, None, None, None, None] 
-    color_VBO = [None] * 100
-    
-    # color_VBO = [] 
 
-    # VAO[0] = gl.glGenVertexArrays(1) 
-    # VAO[1] = gl.glGenVertexArrays(1) 
-    # VAO[2] = gl.glGenVertexArrays(1) 
-    # VAO[3] = gl.glGenVertexArrays(1) 
-    # VAO[4] = gl.glGenVertexArrays(1)
-    # VAO[5] = gl.glGenVertexArrays(1)
-    # VAO[6] = gl.glGenVertexArrays(1)
+
+def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5, data_q6, data_q7):
+    global VAO
+    global VBO
+    color_VBO = [None] * 100
+
     count = 0
     while(count <= 20):
         VAO[count] = gl.glGenVertexArrays(1)
         count += 1
     
 
-    # VBO[0] = gl.glGenBuffers(1) 
-    # VBO[1] = gl.glGenBuffers(1)
-    # VBO[2] = gl.glGenBuffers(1)
-    # VBO[3] = gl.glGenBuffers(1)
-    # VBO[4] = gl.glGenBuffers(1)
-    # VBO[5] = gl.glGenBuffers(1)
-    # VBO[6] = gl.glGenBuffers(1)
     count = 0
     while(count <= 20):
         VBO[count] = gl.glGenBuffers(1)
         count += 1
-    
 
-    # color_VBO[0] = gl.glGenBuffers(1)
-    # color_VBO[1] = gl.glGenBuffers(1)
-    # color_VBO[2] = gl.glGenBuffers(1)
-    # color_VBO[3] = gl.glGenBuffers(1)
-    # color_VBO[4] = gl.glGenBuffers(1)
-    # color_VBO[5] = gl.glGenBuffers(1)
-    # color_VBO[6] = gl.glGenBuffers(1)
+
     count = 0
     while(count <= 20):
         color_VBO[count] = gl.glGenBuffers(1)
@@ -318,7 +296,6 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
 
 
 
-
     # parte triangular do telhado
     lista_cores = [
     0.0, 1.0, 1.0, # Vertice 1
@@ -327,8 +304,6 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
     ] 
     
     configura_VAO_e_VBO_triangulo(color_VBO, lista_cores, 1, data_t2)
-
-
 
 
 
@@ -343,9 +318,6 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 2, data_q1)
-
-
-
 
 
 
@@ -405,8 +377,6 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
     
 
 
-
-
     # parte retangular do telhado
     lista_cores = [
     0.0, 1.0, 1.0, # Vertice 1
@@ -418,6 +388,18 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 4, data_q3)
+
+    # gramado
+    lista_cores = [
+    0.0, 0.5, 0.0 , # Vertice 1
+    0.0, 0.5, 0.0 , # Vertice 2
+    0.0, 0.5, 0.0 ,# Vertice 3
+    0.0, 0.5, 0.0 , # Vertice 1
+    0.0, 0.5, 0.0 , # Vertice 2
+    0.0, 0.5, 0.0  # Vertice 3
+    ] 
+
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 8, data_q3)
     
 
 
@@ -464,11 +446,8 @@ def create_shader_program():
     gl.glDeleteShader(fragmentShader) 
 
 
-def display():
-    # gl.glClearColor(0.5, 0.5, 0.5, 1.0)
-    # gl.glClear(gl.GL_COLOR_BUFFER_BIT)
-
-    gl.glClearColor(0.5, 0.5, 0.5, 1.0)
+def display(noturno = False):
+    gl.glClearColor(1.0, 0.0, 1.0, 1.0) if noturno else gl.glClearColor(0.0, 0.0, 7.0, 1.0) 
     # Limpa os buffers de cor e profundidade para cada iteração de renderização
     gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
 
@@ -527,11 +506,12 @@ def display():
 
     # sol
     display_quadrado(7, 3, 3, 0, -0.5, .5, 0)
-    # configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 7, data_q6)
+
+    # gramado
+    display_quadrado(8, -1, -4, -4, 20, 4, 0)
+    
 
     
-    
-
 
     gl.glUseProgram(0) # Desvincula o Shader Program
 
@@ -547,8 +527,12 @@ def keyboard( key, x, y ):
 
     print("TECLA PRESSIONADA: {}".format(key))
 
-    if key == b'\x1b': # ESC
-        sys.exit( )  
+    if key == b'n': # ESC
+        display(True)
+
+    if key == b'd': # ESC
+        display()
+        
 
 def main_opengl():
     print(" ==== main_opengl ====")
@@ -571,9 +555,10 @@ def main_opengl():
     q4 = create_janela()
     q5 = create_porta()
     q6 = create_janela()
+    q7 = create_quad()
     
     create_buffers(data_t1=t1, data_t2=t2, data_q1=q1, data_q2=q2, data_q3=q3, data_q4 =q4,
-        data_q5=q5, data_q6=q6)
+        data_q5=q5, data_q6=q6, data_q7=q7)
     
     # Precisa chamar glUseProgram toda vez antes de acessar variável uniform no shader
     gl.glUseProgram(shaderProgram)
