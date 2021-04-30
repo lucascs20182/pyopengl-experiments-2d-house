@@ -448,6 +448,9 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 13, data_q6) # estrela 2
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 14, data_q6) # estrela 3
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 15, data_q6) # estrela 4
+
+    # maçaneta
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 16, data_q6)
     
 
 
@@ -585,8 +588,8 @@ def display(noturno = False):
         display_quadrado(14, -4, 2.7, 0, -0.1, .1, 0) # estrela 3
         display_quadrado(14, -3, 2.7, 0, -0.1, .1, 0) # estrela 3
 
-
-        display_quadrado(15, 0.1, 2.4, 0, -0.1, .1, 0) # estrela 4
+    # maçaneta
+    display_quadrado(16, -1.4, -1.5, 0, -0.1, .1, 0) # estrela 3
     
 
     
