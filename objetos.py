@@ -8,10 +8,8 @@ import ctypes
 
 # Variáveis globais
 shaderProgram = None
-# VBO = [None, None, None, None, None, None, None] # Vertex Buffer Object
-VBO = [None] * 100
-# VAO = [None, None, None, None, None, None, None] # Vertex Array Object
-VAO = [None] * 100
+VBO = [None] * 100  # inicializando Vertex Buffer Object
+VAO = [None] * 100  # inicializando  Array Object
 
 vertex_shader_codigo= """
 #version 330 core
@@ -44,34 +42,35 @@ void main()
 """
 
 
+# criação dos vértices
+# especificação da forma
+
 def create_data_triangulo_1():
     
-    # Vertices do triangulo
-    v1 = glm.vec3(-0.9, -0.3, 0.0) # esquerda abaixo
-    v2 = glm.vec3(0.1, -0.3, 0.0) # meio abaixo
-    v3 = glm.vec3(-0.35, 0.3, 0.0) # esquerda acima 
+    v1 = glm.vec3(-0.9, -0.3, 0.0) 
+    v2 = glm.vec3(0.1, -0.3, 0.0) 
+    v3 = glm.vec3(-0.35, 0.3, 0.0) 
     tri = glm.mat3(v1, v2, v3) 
     return tri
 
 
 def create_data_triangulo_2():
     
-    # Vertices do triangulo
-    v1 = glm.vec3(-0.9, -0.3, 0.0) # esquerda abaixo
-    v2 = glm.vec3(0.1, -0.3, 0.0) # meio abaixo
-    v3 = glm.vec3(-0.35, 0.3, 0.0) # esquerda acima 
+    v1 = glm.vec3(-0.9, -0.3, 0.0) 
+    v2 = glm.vec3(0.1, -0.3, 0.0) 
+    v3 = glm.vec3(-0.35, 0.3, 0.0) 
     tri = glm.mat3(v1, v2, v3) 
     return tri
 
 def create_quad():
 
     lista_vertices = [
-        -0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 1
-        0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 2
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 3
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 1
-        -0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 2
-        -0.5, -0.5, -0.5 # Face 1 | Triangulo 2 | Vertice 3
+        -0.5, -0.5, -0.5, 
+        0.5, -0.5, -0.5, 
+        0.5,  0.5, -0.5,
+        0.5,  0.5, -0.5,
+        -0.5,  0.5, -0.5, 
+        -0.5, -0.5, -0.5 
         ]
 
     vertices = np.array(lista_vertices, dtype=np.float32)
@@ -82,12 +81,12 @@ def create_quad():
 def create_quad2():
 
     lista_vertices = [
-        -0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 1
-        0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 2
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 3
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 1
-        -0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 2
-        -0.5, -0.5, -0.5 # Face 1 | Triangulo 2 | Vertice 3
+        -0.5, -0.5, -0.5, 
+        0.5, -0.5, -0.5, 
+        0.5,  0.5, -0.5, 
+        0.5,  0.5, -0.5, 
+        -0.5,  0.5, -0.5,
+        -0.5, -0.5, -0.5 
         ]
 
     vertices = np.array(lista_vertices, dtype=np.float32)
@@ -98,12 +97,12 @@ def create_quad2():
 def create_telhado():
 
     lista_vertices = [
-        -0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 1
-        0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 2
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 3
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 1
-        -0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 2
-        -0.5, -0.5, -0.5 # Face 1 | Triangulo 2 | Vertice 3
+        -0.5, -0.5, -0.5, 
+        0.5, -0.5, -0.5, 
+        0.5,  0.5, -0.5, 
+        0.5,  0.5, -0.5, 
+        -0.5,  0.5, -0.5, 
+        -0.5, -0.5, -0.5 
         ]
 
     vertices = np.array(lista_vertices, dtype=np.float32)
@@ -113,12 +112,12 @@ def create_telhado():
 def create_janela():
 
     lista_vertices = [
-        -0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 1
-        0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 2
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 3
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 1
-        -0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 2
-        -0.5, -0.5, -0.5 # Face 1 | Triangulo 2 | Vertice 3
+        -0.5, -0.5, -0.5, 
+        0.5, -0.5, -0.5, 
+        0.5,  0.5, -0.5, 
+        0.5,  0.5, -0.5, 
+        -0.5,  0.5, -0.5, 
+        -0.5, -0.5, -0.5 
         ]
 
     vertices = np.array(lista_vertices, dtype=np.float32)
@@ -128,18 +127,21 @@ def create_janela():
 def create_porta():
 
     lista_vertices = [
-        -0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 1
-        0.5, -0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 2
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 1 | Vertice 3
-        0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 1
-        -0.5,  0.5, -0.5, # Face 1 | Triangulo 2 | Vertice 2
-        -0.5, -0.5, -0.5 # Face 1 | Triangulo 2 | Vertice 3
+        -0.5, -0.5, -0.5, 
+        0.5, -0.5, -0.5, 
+        0.5,  0.5, -0.5, 
+        0.5,  0.5, -0.5, 
+        -0.5,  0.5, -0.5,
+        -0.5, -0.5, -0.5 
         ]
 
     vertices = np.array(lista_vertices, dtype=np.float32)
     
     return vertices
 
+# transforma a config do VAO e VBO em uma função
+# para reutilizar código
+# função usada para configurações do triangulo
 def configura_VAO_e_VBO_triangulo(color_VBO, lista_cores, indiceVAO, data):
     gl.glBindVertexArray(VAO[indiceVAO])
     gl.glBindBuffer(gl.GL_ARRAY_BUFFER, VBO[indiceVAO]) # Efetua o bind do VBO
@@ -171,6 +173,9 @@ def configura_VAO_e_VBO_triangulo(color_VBO, lista_cores, indiceVAO, data):
     gl.glBindBuffer(gl.GL_ARRAY_BUFFER, 0)
 
 
+# transforma a config do VAO e VBO em uma função
+# para reutilizar código
+# função usada para configurações do quadrado
 def configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, indiceVAO, data):
     gl.glBindVertexArray(VAO[indiceVAO])
     gl.glBindBuffer(gl.GL_ARRAY_BUFFER, VBO[indiceVAO]) # Efetua o bind do VBO
@@ -201,7 +206,7 @@ def configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, indiceVAO, data):
     gl.glDisableVertexAttribArray(local_vCor)
     gl.glBindBuffer(gl.GL_ARRAY_BUFFER, 0)
 
-
+# cuida da posição do desenho, escala etc.
 def display_triangulo(indiceVAO, translatarX, translatarY, translatarZ, escalarX, escalarY, escalarZ):
     # Triangulo 1
     gl.glBindVertexArray(VAO[indiceVAO])
@@ -232,7 +237,7 @@ def display_triangulo(indiceVAO, translatarX, translatarY, translatarZ, escalarX
 
 
 
-
+# cuida da posição do quadrado, escala do quadrado etc.
 def display_quadrado(indiceVAO, translatarX, translatarY, translatarZ, escalarX, escalarY, escalarZ):
     gl.glBindVertexArray(VAO[indiceVAO])
 
@@ -288,9 +293,9 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # Triangulo 1
     lista_cores = [
-    1.0, 0.3, 0.7, # Vertice 1
-    1.0, 0.3, 0.7, # Vertice 2
-    1.0, 0.3, 0.7 # Vertice 3
+    1.0, 0.3, 0.7, 
+    1.0, 0.3, 0.7, 
+    1.0, 0.3, 0.7 
     ] 
 
     configura_VAO_e_VBO_triangulo(color_VBO, lista_cores, 0, data_t1)
@@ -299,9 +304,9 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # parte triangular do telhado
     lista_cores = [
-    1, 0.3, 0.5, # Vertice 1
-    1, 0.3, 0.5, # Vertice 2
-    1, 0.3, 0.5 # Vertice 3
+    1, 0.3, 0.5, 
+    1, 0.3, 0.5, 
+    1, 0.3, 0.5 
     ] 
     
     configura_VAO_e_VBO_triangulo(color_VBO, lista_cores, 1, data_t2)
@@ -311,12 +316,12 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # parte retangular do telhado
     lista_cores = [
-    1, 0.3, 0.5, # Vertice 1
-    1, 0.3, 0.5, # Vertice 2
-    1, 0.3, 0.5,# Vertice 3
-    1, 0.3, 0.5, # Vertice 1
-    1, 0.3, 0.5, # Vertice 2
-    1, 0.3, 0.5 # Vertice 3
+    1, 0.3, 0.5, 
+    1, 0.3, 0.5, 
+    1, 0.3, 0.5,
+    1, 0.3, 0.5, 
+    1, 0.3, 0.5, 
+    1, 0.3, 0.5 
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 4, data_q3)
@@ -325,12 +330,12 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # Quadrado 1
     lista_cores = [
-    0.9, 0.7, 0.6, # Vertice 1
-    0.9, 0.7, 0.6, # Vertice 2
-    0.9, 0.7, 0.6,# Vertice 3
-    0.9, 0.7, 0.6, # Vertice 1
-    0.9, 0.7, 0.6, # Vertice 2
-    0.9, 0.7, 0.6 # Vertice 3
+    0.9, 0.7, 0.6, 
+    0.9, 0.7, 0.6, 
+    0.9, 0.7, 0.6,
+    0.9, 0.7, 0.6, 
+    0.9, 0.7, 0.6, 
+    0.9, 0.7, 0.6 
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 2, data_q1)
@@ -339,12 +344,12 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # Janela 1: tá tendo uma rave, não tira ponto.
     lista_cores = [
-        0.3, 0, 0, 1.0, # Vertice 1
-        0.3, 0, 0, 1.0, # Vertice 2
-        0.3, 0, 0, 1.0,# Vertice 3
-        0.3, 0, 0, 1.0, # Vertice 1
-        0.3, 0, 0, 1.0, # Vertice 2
-        0.3, 0, 0, 1.0 # Vertice 3
+        0.3, 0, 0, 1.0, 
+        0.3, 0, 0, 1.0, 
+        0.3, 0, 0, 1.0,
+        0.3, 0, 0, 1.0, 
+        0.3, 0, 0, 1.0, 
+        0.3, 0, 0, 1.0 
     ]
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 5, data_q4)
@@ -354,12 +359,12 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # cor do sol
     lista_cores = [
-    1.0, 1.0, 0.0, # Vertice 1
-    1.0, 1.0, 0.0, # Vertice 2
-    1.0, 1.0, 0.0,# Vertice 3
-    1.0, 1.0, 0.0, # Vertice 1
-    1.0, 1.0, 1.0, # Vertice 2
-    1.0, 1.0, 1.0 # Vertice 3
+    1.0, 1.0, 0.0, 
+    1.0, 1.0, 0.0, 
+    1.0, 1.0, 0.0,
+    1.0, 1.0, 0.0, 
+    1.0, 1.0, 1.0, 
+    1.0, 1.0, 1.0 
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 7, data_q6)
@@ -368,12 +373,12 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # porta 1
     lista_cores = [
-    0, 0.9, 0.6, # Vertice 1
-    0, 0.9, 0.6, # Vertice 2
-    0, 0.9, 0.6,# Vertice 3
-    0, 0.9, 0.6, # Vertice 1
-    0, 0.9, 0.6, # Vertice 2
-    0, 0.9, 0.6 # Vertice 3
+    0, 0.9, 0.6, 
+    0, 0.9, 0.6, 
+    0, 0.9, 0.6,
+    0, 0.9, 0.6, 
+    0, 0.9, 0.6, 
+    0, 0.9, 0.6 
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 6, data_q5)
@@ -381,12 +386,12 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # Quadrado 2
     lista_cores = [
-    0.9, 0.7, 0.7, # Vertice 1
-    0.9, 0.7, 0.7, # Vertice 2
-    0.9, 0.7, 0.7,# Vertice 3
-    0.9, 0.7, 0.7, # Vertice 1
-    0.9, 0.7, 0.7, # Vertice 2
-    0.9, 0.7, 0.7 # Vertice 3
+    0.9, 0.7, 0.7, 
+    0.9, 0.7, 0.7, 
+    0.9, 0.7, 0.7,
+    0.9, 0.7, 0.7, 
+    0.9, 0.7, 0.7, 
+    0.9, 0.7, 0.7 
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 3, data_q2)
@@ -395,12 +400,12 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # gramado
     lista_cores = [
-    0.0, 0.5, 0.0 , # Vertice 1
-    0.0, 0.5, 0.0 , # Vertice 2
-    0.0, 0.5, 0.0 ,# Vertice 3
-    0.0, 0.5, 0.0 , # Vertice 1
-    0.0, 0.5, 0.0 , # Vertice 2
-    0.0, 0.5, 0.0  # Vertice 3
+    0.0, 0.5, 0.0 , 
+    0.0, 0.5, 0.0 , 
+    0.0, 0.5, 0.0 ,
+    0.0, 0.5, 0.0 , 
+    0.0, 0.5, 0.0 , 
+    0.0, 0.5, 0.0  
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 8, data_q3)
@@ -408,24 +413,24 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # nuvem 1
     lista_cores = [
-    0.8, 0.8, 0.8, # Vertice 1
-    0.8, 0.8, 0.8, # Vertice 2
-    0.8, 0.8, 0.8,# Vertice 3
-    0.8, 0.8, 0.8, # Vertice 1
-    0.8, 0.8, 0.8, # Vertice 2
-    0.8, 0.8, 0.8 # Vertice 3
+    0.8, 0.8, 0.8, 
+    0.8, 0.8, 0.8, 
+    0.8, 0.8, 0.8,
+    0.8, 0.8, 0.8, 
+    0.8, 0.8, 0.8, 
+    0.8, 0.8, 0.8 
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 9, data_q8)
 
     # nuvem 2
     lista_cores = [
-    0.9, 0.9, 0.9, # Vertice 1
-    0.9, 0.9, 0.9, # Vertice 2
-    0.9, 0.9, 0.9,# Vertice 3
-    0.9, 0.9, 0.9, # Vertice 1
-    0.9, 0.9, 0.9, # Vertice 2
-    0.9, 0.9, 0.9 # Vertice 3
+    0.9, 0.9, 0.9, 
+    0.9, 0.9, 0.9, 
+    0.9, 0.9, 0.9,
+    0.9, 0.9, 0.9, 
+    0.9, 0.9, 0.9, 
+    0.9, 0.9, 0.9 
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 10, data_q9)
@@ -433,12 +438,12 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4,
 
     # cor da lua
     lista_cores = [
-    1.0, 1.0, 1.0, # Vertice 1
-    1.0, 1.0, 1.0, # Vertice 2
-    1.0, 1.0, 1.0,# Vertice 3
-    1.0, 1.0, 1.0, # Vertice 1
-    1.0, 1.0, 1.0, # Vertice 2
-    1.0, 1.0, 1.0 # Vertice 3
+    1.0, 1.0, 1.0, 
+    1.0, 1.0, 1.0, 
+    1.0, 1.0, 1.0,
+    1.0, 1.0, 1.0, 
+    1.0, 1.0, 1.0, 
+    1.0, 1.0, 1.0 
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 11, data_q6)
@@ -592,10 +597,6 @@ def display(noturno = False):
     display_quadrado(16, -1.4, -1.5, 0, -0.1, .1, 0) # estrela 3
     
 
-    
-    
-
-    
 
     gl.glUseProgram(0) # Desvincula o Shader Program
 
@@ -619,17 +620,16 @@ def keyboard( key, x, y ):
         
 
 def main_opengl():
-    print(" ==== main_opengl ====")
-
     # Cria contexto OpenGL e configura janela
     glut.glutInit()
     glut.glutInitDisplayMode(glut.GLUT_DOUBLE | glut.GLUT_RGBA)
     largura = 400
     altura = 400
     glut.glutInitWindowSize(largura, altura)
-    glut.glutCreateWindow('Desenhando mais de um objeto')
+    glut.glutCreateWindow('Av1 - Casa 2d')
 
     # Inicialização
+    # leitura dos vértices dos objetos
     create_shader_program()
     t1 = create_data_triangulo_1()
     t2 = create_data_triangulo_2()
@@ -664,6 +664,7 @@ def main_opengl():
     glut.glutDisplayFunc(display)
     glut.glutKeyboardFunc(keyboard)
 
+    
     print("Fornecedor do Driver: {}".format(gl.glGetString(gl.GL_VENDOR).decode()))
     print("Hardware Video: {}".format(gl.glGetString(gl.GL_RENDERER).decode()))
     print("Versao do OpenGL: {}".format(gl.glGetString(gl.GL_VERSION).decode()))
@@ -672,6 +673,4 @@ def main_opengl():
 
 
 if __name__ == '__main__':
-    print("\nOBJETOS")
-
     main_opengl()
