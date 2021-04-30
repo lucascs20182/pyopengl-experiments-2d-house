@@ -262,7 +262,8 @@ def display_quadrado(indiceVAO, translatarX, translatarY, translatarZ, escalarX,
 
 
 
-def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5, data_q6, data_q7):
+def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, 
+    data_q5, data_q6, data_q7, data_q8, data_q9):
     global VAO
     global VBO
     color_VBO = [None] * 100
@@ -287,9 +288,9 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
 
     # Triangulo 1
     lista_cores = [
-    1.0, 0.0, 0.0, # Vertice 1
-    1.0, 0.0, 0.0, # Vertice 2
-    1.0, 0.0, 0.0 # Vertice 3
+    1.0, 0.3, 0.7, # Vertice 1
+    1.0, 0.3, 0.7, # Vertice 2
+    1.0, 0.3, 0.7 # Vertice 3
     ] 
 
     configura_VAO_e_VBO_triangulo(color_VBO, lista_cores, 0, data_t1)
@@ -298,37 +299,52 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
 
     # parte triangular do telhado
     lista_cores = [
-    0.0, 1.0, 1.0, # Vertice 1
-    0.0, 1.0, 1.0, # Vertice 2
-    0.0, 1.0, 1.0 # Vertice 3
+    1, 0.3, 0.5, # Vertice 1
+    1, 0.3, 0.5, # Vertice 2
+    1, 0.3, 0.5 # Vertice 3
     ] 
     
     configura_VAO_e_VBO_triangulo(color_VBO, lista_cores, 1, data_t2)
 
 
 
+
+    # parte retangular do telhado
+    lista_cores = [
+    1, 0.3, 0.5, # Vertice 1
+    1, 0.3, 0.5, # Vertice 2
+    1, 0.3, 0.5,# Vertice 3
+    1, 0.3, 0.5, # Vertice 1
+    1, 0.3, 0.5, # Vertice 2
+    1, 0.3, 0.5 # Vertice 3
+    ] 
+
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 4, data_q3)
+
+
+
     # Quadrado 1
     lista_cores = [
-    1.0, 0.0, 1.0, # Vertice 1
-    1.0, 0.0, 1.0, # Vertice 2
-    1.0, 0.0, 1.0,# Vertice 3
-    1.0, 0.0, 1.0, # Vertice 1
-    1.0, 0.0, 1.0, # Vertice 2
-    1.0, 0.0, 1.0 # Vertice 3
+    0.9, 0.7, 0.6, # Vertice 1
+    0.9, 0.7, 0.6, # Vertice 2
+    0.9, 0.7, 0.6,# Vertice 3
+    0.9, 0.7, 0.6, # Vertice 1
+    0.9, 0.7, 0.6, # Vertice 2
+    0.9, 0.7, 0.6 # Vertice 3
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 2, data_q1)
 
 
 
-    # Janela 1
+    # Janela 1: tá tendo uma rave, não tira ponto.
     lista_cores = [
-    0.0, 1.0, 1.0, # Vertice 1
-    0.0, 1.0, 1.0, # Vertice 2
-    0.0, 1.0, 1.0,# Vertice 3
-    0.0, 1.0, 1.0, # Vertice 1
-    0.0, 1.0, 1.0, # Vertice 2
-    0.0, 1.0, 1.0 # Vertice 3
+        0.3, 0, 0, 1.0, # Vertice 1
+        0.3, 0, 0, 1.0, # Vertice 2
+        0.3, 0, 0, 1.0,# Vertice 3
+        0.3, 0, 0, 1.0, # Vertice 1
+        0.3, 0, 0, 1.0, # Vertice 2
+        0.3, 0, 0, 1.0 # Vertice 3
     ]
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 5, data_q4)
@@ -352,12 +368,12 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
 
     # porta 1
     lista_cores = [
-    0.5, 1.0, 0.5, # Vertice 1
-    0.5, 1.0, 0.5, # Vertice 2
-    0.5, 1.0, 0.5,# Vertice 3
-    0.5, 1.0, 0.5, # Vertice 1
-    0.5, 1.0, 0.5, # Vertice 2
-    0.5, 1.0, 0.5 # Vertice 3
+    0, 0.9, 0.6, # Vertice 1
+    0, 0.9, 0.6, # Vertice 2
+    0, 0.9, 0.6,# Vertice 3
+    0, 0.9, 0.6, # Vertice 1
+    0, 0.9, 0.6, # Vertice 2
+    0, 0.9, 0.6 # Vertice 3
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 6, data_q5)
@@ -365,29 +381,17 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
 
     # Quadrado 2
     lista_cores = [
-    0.0, 0.0, 1.0, # Vertice 1
-    0.0, 0.0, 1.0, # Vertice 2
-    0.0, 0.0, 1.0,# Vertice 3
-    0.0, 0.0, 1.0, # Vertice 1
-    0.0, 0.0, 1.0, # Vertice 2
-    0.0, 0.0, 1.0 # Vertice 3
+    0.9, 0.7, 0.7, # Vertice 1
+    0.9, 0.7, 0.7, # Vertice 2
+    0.9, 0.7, 0.7,# Vertice 3
+    0.9, 0.7, 0.7, # Vertice 1
+    0.9, 0.7, 0.7, # Vertice 2
+    0.9, 0.7, 0.7 # Vertice 3
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 3, data_q2)
     
 
-
-    # parte retangular do telhado
-    lista_cores = [
-    0.0, 1.0, 1.0, # Vertice 1
-    0.0, 1.0, 1.0, # Vertice 2
-    0.0, 1.0, 1.0,# Vertice 3
-    0.0, 1.0, 1.0, # Vertice 1
-    0.0, 1.0, 1.0, # Vertice 2
-    0.0, 1.0, 1.0 # Vertice 3
-    ] 
-
-    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 4, data_q3)
 
     # gramado
     lista_cores = [
@@ -400,6 +404,50 @@ def create_buffers(data_t1, data_t2, data_q1, data_q2, data_q3, data_q4, data_q5
     ] 
 
     configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 8, data_q3)
+
+
+    # nuvem 1
+    lista_cores = [
+    0.8, 0.8, 0.8, # Vertice 1
+    0.8, 0.8, 0.8, # Vertice 2
+    0.8, 0.8, 0.8,# Vertice 3
+    0.8, 0.8, 0.8, # Vertice 1
+    0.8, 0.8, 0.8, # Vertice 2
+    0.8, 0.8, 0.8 # Vertice 3
+    ] 
+
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 9, data_q8)
+
+    # nuvem 2
+    lista_cores = [
+    0.9, 0.9, 0.9, # Vertice 1
+    0.9, 0.9, 0.9, # Vertice 2
+    0.9, 0.9, 0.9,# Vertice 3
+    0.9, 0.9, 0.9, # Vertice 1
+    0.9, 0.9, 0.9, # Vertice 2
+    0.9, 0.9, 0.9 # Vertice 3
+    ] 
+
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 10, data_q9)
+
+
+    # cor da lua
+    lista_cores = [
+    1.0, 1.0, 1.0, # Vertice 1
+    1.0, 1.0, 1.0, # Vertice 2
+    1.0, 1.0, 1.0,# Vertice 3
+    1.0, 1.0, 1.0, # Vertice 1
+    1.0, 1.0, 1.0, # Vertice 2
+    1.0, 1.0, 1.0 # Vertice 3
+    ] 
+
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 11, data_q6)
+
+
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 12, data_q6) # estrela 1
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 13, data_q6) # estrela 2
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 14, data_q6) # estrela 3
+    configura_VAO_e_VBO_quadrado(color_VBO, lista_cores, 15, data_q6) # estrela 4
     
 
 
@@ -447,7 +495,7 @@ def create_shader_program():
 
 
 def display(noturno = False):
-    gl.glClearColor(1.0, 0.0, 1.0, 1.0) if noturno else gl.glClearColor(0.0, 0.0, 7.0, 1.0) 
+    gl.glClearColor(0.1, 0, 0.6, 1.0) if noturno else gl.glClearColor(0.1, 0.7, 0.9, 1.0) 
     # Limpa os buffers de cor e profundidade para cada iteração de renderização
     gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
 
@@ -504,11 +552,44 @@ def display(noturno = False):
     # porta 1
     display_quadrado(6, -1.8, -1.69, -0.1, 1, 2, 1)
 
-    # sol
-    display_quadrado(7, 3, 3, 0, -0.5, .5, 0)
-
     # gramado
     display_quadrado(8, -1, -4, -4, 20, 4, 0)
+
+    if noturno == False:
+        # sol
+        display_quadrado(7, 3, 3, 0, -0.5, .5, 0)
+
+        # nuvem 1
+        display_quadrado(9, -0.5, 2.5, 0, 1.5, 0.5, 0)
+
+        # nuvem 2
+        display_quadrado(10, 0.2, 2.3, 1, 1.5, 0.5, 0)
+    else:
+        # lua 
+        display_quadrado(11, 3, 3, 0, -0.5, .5, 0)
+
+        
+        display_quadrado(12, -0.5, 2.5, 0, -0.1, .1, 0) # estrela 1
+        display_quadrado(12, 0.15, 1.8, 0, -0.1, .1, 0) # estrela 1
+        display_quadrado(12, -0.27, 1.7, 0, -0.1, .1, 0) # estrela 1
+        display_quadrado(12, 10, 1.6, 0, -0.1, .1, 0) # estrela 1
+
+        display_quadrado(13, 0.2, 2.3, 0, -0.1, .1, 0) # estrela 2
+        display_quadrado(13, 5, 2.3, 0, -0.1, .1, 0) # estrela 2
+        display_quadrado(13, -6, 2.3, 0, -0.1, .1, 0) # estrela 2
+        display_quadrado(13, 16, 2.3, 0, -0.1, .1, 0) # estrela 2
+
+        display_quadrado(14, 0.3, 2.7, 0, -0.1, .1, 0) # estrela 3
+        display_quadrado(14, -14, 2.7, 0, -0.1, .1, 0) # estrela 3
+        display_quadrado(14, -5, 2.7, 0, -0.1, .1, 0) # estrela 3
+        display_quadrado(14, -4, 2.7, 0, -0.1, .1, 0) # estrela 3
+        display_quadrado(14, -3, 2.7, 0, -0.1, .1, 0) # estrela 3
+
+
+        display_quadrado(15, 0.1, 2.4, 0, -0.1, .1, 0) # estrela 4
+    
+
+    
     
 
     
@@ -556,9 +637,11 @@ def main_opengl():
     q5 = create_porta()
     q6 = create_janela()
     q7 = create_quad()
-    
+    q8 = create_quad()
+    q9 = create_quad()
+
     create_buffers(data_t1=t1, data_t2=t2, data_q1=q1, data_q2=q2, data_q3=q3, data_q4 =q4,
-        data_q5=q5, data_q6=q6, data_q7=q7)
+        data_q5=q5, data_q6=q6, data_q7=q7, data_q8=q8, data_q9=q9)
     
     # Precisa chamar glUseProgram toda vez antes de acessar variável uniform no shader
     gl.glUseProgram(shaderProgram)
